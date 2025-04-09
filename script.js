@@ -1,0 +1,1 @@
+console.log("git@github.com:Its-Sythe/ttt-odin.git")
