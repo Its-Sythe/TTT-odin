@@ -61,4 +61,20 @@ const gameBoard = (function() {
     }
 })();
 
+const gameController = (function () {
 
+    function playRound() {
+        let board = gameBoard.getBoard();
+        let userRow = prompt("1 to 3");
+        let userCol = prompt("1 to 3");
+
+        userRow = Number(userRow) - 1;
+        userCol = Number(userCol) - 1;
+        
+        gameBoard.makeMove(userRow, userCol, "X");
+    }
+
+    return {
+        playRound
+    }
+})();
