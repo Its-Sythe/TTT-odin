@@ -32,7 +32,7 @@ const gameBoard = (function() {
         } else if (board[1][0] == board[1][1] && board[1][0] == board[1][2] && board[1][0] != 0) {
             return `Match won at row 2 by ${board[1][0]}`;
         } else if (board[2][0] == board[2][1] && board[2][0] == board[2][2] && board[2][0] != 0) {
-            return `Match won at row 3 by ${board[2[0]]}`;
+            return `Match won at row 3 by ${board[2][0]}`;
         }
         //Column validation
         if (board[0][0] == board[1][0] && board[0][0] == board[2][0] && board[0][0] != 0) {
@@ -49,7 +49,7 @@ const gameBoard = (function() {
             return `Match won at diagonal by ${board[0][2]}`;
         }
 
-        if (!board[0].includes(0) && !board[1].includes(0) && board[2].includes(0)) {
+        if (!board[0].includes(0) && !board[1].includes(0) && !board[2].includes(0)) {
             return `Its a tie`;
         }
     }
@@ -78,3 +78,5 @@ const gameController = (function () {
         playRound
     }
 })();
+
+ 
