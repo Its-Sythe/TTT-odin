@@ -17,16 +17,13 @@ const gameBoard = (function() {
 
         if (cell == 0) {
             board[row][col] = player;
+            console.log(board);
         }
         else if (cell != 0) {
             return;
         }
     }
 
-    // board[1][0] = "X"; board[1][1] = "X"; board[1][2] = "X";
-
-    board[0][2] = "O"; board[1][2] = "O"; board[2][2] = "O"
-    board[0][1] = "O"; board[1][1] = "O"; board[2][1] = "O"
 
     const validateTable = function() {
         //Row validation
@@ -51,6 +48,10 @@ const gameBoard = (function() {
         } else if (board[0][2] == board[1][1] && board[0][2] == board[2][0] && board[0][2] != 0) {
             return `Match won at diagonal by ${board[0][2]}`;
         }
+
+        if (!board[0].includes(0) && !board[1].includes(0) && board[2].includes(0)) {
+            return `Its a tie`;
+        }
     }
 
     return {
@@ -58,4 +59,6 @@ const gameBoard = (function() {
         makeMove,
         validateTable
     }
-})(); 
+})();
+
+
