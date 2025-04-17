@@ -79,5 +79,31 @@ const game = (function() {
     }
 })();
 
+const gameUi = (function() {
+    let cells = document.querySelectorAll("#cell");
+    let board = game.getBoard();
 
+    const linkBoard = function() {
+        for (let b = 0; b < board.length; b++) {
+            cells[b].innerHTML = board[b]
+        }
+    }
 
+    const handleClick = function() {
+        for (let a = 0; a < cells.length; a++) {
+            cells[a].addEventListener("click", play(cells[a], "X"));
+        }
+    }
+
+    const play = function(c, option) {
+        console.log("J")
+        game.playRound(c, option);
+    }
+
+    return {
+        linkBoard,
+        handleClick
+    } 
+})();
+
+gameUi.handleClick()
