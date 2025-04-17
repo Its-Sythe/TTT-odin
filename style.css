@@ -28,7 +28,7 @@ body {
     gap: 10px;
 }
 
-.gameSpace > #cell {
+.gameSpace > .cell {
     width: 175px;
     height: 185px;
     border-radius: 10px;

@@ -42,7 +42,7 @@ const game = (function() {
         if  (gameboard[0] == gameboard[4] && gameboard[0] == gameboard[8] && gameboard[0] != "") {
             console.log("Match won at diag");
             return "Match won";
-        } else if (gameboard[2] == gameboard[4] && gameboard[2] == gameboard[6] && gameboard[0] != "") {
+        } else if (gameboard[2] == gameboard[4] && gameboard[2] == gameboard[6] && gameboard[2] != "") {
             console.log("Match won at diag");
             return "Match won";
         }
@@ -80,30 +80,25 @@ const game = (function() {
 })();
 
 const gameUi = (function() {
-    let cells = document.querySelectorAll("#cell");
-    let board = game.getBoard();
-
-    const linkBoard = function() {
-        for (let b = 0; b < board.length; b++) {
-            cells[b].innerHTML = board[b]
-        }
+    const cells = document.querySelectorAll(".cell");
+    const board = game.getBoard();
+    const getUiTable = function() {
+        cells.forEach(cell => {
+            cell.addEventListener("click", () => {
+                game.playRound(cell.id, "X");
+                displayMoves(cell);
+            })
+        });
     }
 
-    const handleClick = function() {
-        for (let a = 0; a < cells.length; a++) {
-            cells[a].addEventListener("click", play(cells[a], "X"));
-        }
-    }
-
-    const play = function(c, option) {
-        console.log("J")
-        game.playRound(c, option);
+    const displayMoves = function(c) {
+        c.innerHTML = board[c.id]
     }
 
     return {
-        linkBoard,
-        handleClick
-    } 
+        getUiTable,
+        displayMoves
+    }
 })();
 
-gameUi.handleClick()
+gameUi.getUiTable();
