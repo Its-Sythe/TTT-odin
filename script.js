@@ -54,6 +54,7 @@ const game = (function() {
     }
 
     const playRound = function(slot, option) {
+        gameUi.addClick();
         makeMove(slot, option);
         let gameState = validateTable();
 
@@ -66,15 +67,46 @@ const game = (function() {
     }
 
     const endRound = function()  {
-        gameboard = [
-            "", "", "",
-            "", "", "",
-            "", "", ""
-        ];
-    }
+        setTimeout(() => {
+            gameboard = [
+                "", "", "",
+                "", "", "",
+                "", "", ""
+            ];
+            gameUi.resetUi();
+            }, 1000);    
+        }
 
     return {
         getBoard,
         playRound
     }
 })();
+
+
+const gameUi = (function() {
+    let cells = document.querySelectorAll(".cell");
+    let board = game.getBoard();
+
+    const addClick = function() {
+        for (let a = 0; a < 9; a++) {
+            let cell = cells[a];
+            cell.addEventListener("click", () => {
+                game.playRound(cell.id, "X");
+                cell.innerHTML = board[a];
+            })
+        }
+    }
+
+    const resetUi = function() {
+        for (let b = 0; b < 9; b++) {
+            cells[b].innerHTML = ""
+        }
+    }
+
+    return {
+        addClick,
+        resetUi
+    }
+})();
+
