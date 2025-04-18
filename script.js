@@ -65,12 +65,12 @@ const game = (function() {
 
     }
 
-    const endRound = function() {
-        return gameboard = [
+    const endRound = function()  {
+        gameboard = [
             "", "", "",
             "", "", "",
             "", "", ""
-        ]
+        ];
     }
 
     return {
@@ -78,27 +78,3 @@ const game = (function() {
         playRound
     }
 })();
-
-const gameUi = (function() {
-    const cells = document.querySelectorAll(".cell");
-    const board = game.getBoard();
-    const getUiTable = function() {
-        cells.forEach(cell => {
-            cell.addEventListener("click", () => {
-                game.playRound(cell.id, "X");
-                displayMoves(cell);
-            })
-        });
-    }
-
-    const displayMoves = function(c) {
-        c.innerHTML = board[c.id]
-    }
-
-    return {
-        getUiTable,
-        displayMoves
-    }
-})();
-
-gameUi.getUiTable();
