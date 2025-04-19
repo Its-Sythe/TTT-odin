@@ -87,8 +87,12 @@ const gameUi = (function() {
     let board = game.getBoard();
     const addClick = function() {
         container.addEventListener("click", function(event) {
-            game.playRound(event.target.id, "X");
-            event.target.innerHTML = "X"
+            if (event.target.className != "cell") {
+                return;
+            } else {
+                game.playRound(event.target.id, "X");
+                event.target.innerHTML = "X";
+            }
         })
     }
 
