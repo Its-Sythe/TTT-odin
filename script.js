@@ -1,4 +1,10 @@
 const game = (function() {
+    let player = "X";
+
+    const switchUser = function() {
+        return player == "X" ? player = "O" : player = "X";
+    }
+
     let gameboard = [
         "", "", "",
         "", "", "",
@@ -53,14 +59,16 @@ const game = (function() {
         }
     }
 
-    const playRound = function(slot, option) {
-        makeMove(slot, option);
+    const playRound = function(slot, player) {
+        makeMove(slot, player);
         let gameState = validateTable();
 
         if (gameState == "Match won" || gameState == "Match tied") {
+            console.log(gameboard)
             endRound();
         } else {
-            makeMove(slot, option);
+            switchUser();
+            makeMove(slot, player);
         }
     }
 
@@ -77,7 +85,8 @@ const game = (function() {
 
     return {
         getBoard,
-        playRound
+        playRound,
+        switchUser
     }
 })();
 
@@ -90,8 +99,8 @@ const gameUi = (function() {
             if (event.target.className != "cell") {
                 return;
             } else {
-                game.playRound(event.target.id, "X");
-                event.target.innerHTML = "X";
+                game.playRound(event.target.id, game.switchUser());
+                event.target.innerHTML = game.switchUser();
             }
         })
     }
