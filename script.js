@@ -56,6 +56,8 @@ const game = (function() {
         
         board[slot] = currentPlayer;
 
+        switchPlayer();
+
         let gameState = validateTable();
 
         if (gameState.state == "Win" || gameState.state == "Tie") {
@@ -84,4 +86,32 @@ const game = (function() {
         validateTable,
         playRound
     }
+})();
+
+const gameUi = (function() {
+    const board = game.getBoard()
+    const startBtn = document.getElementById("playBtn");
+    const tableSpace = document.querySelector(".tableSpace");
+    const playerForm = document.querySelector(".playerSelection");
+
+    const formValidation = function() {
+        const player1 = document.forms["playerSelecton"];
+        console.log(player1);
+    }
+
+    startBtn.addEventListener("click", function() {
+        playerForm.style.display = "flex";
+        formValidation()
+        startBtn.remove();
+    });
+
+    tableSpace.addEventListener("click", function(e) {
+        let tgt = e.target;
+
+        if (tgt.className != "cell") {
+            return;
+        }
+        game.playRound(tgt.id);
+        tgt.innerHTML = board[tgt.id];
+    })
 })();
