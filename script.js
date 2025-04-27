@@ -95,8 +95,7 @@ const gameUi = (function() {
     const playerForm = document.querySelector(".playerSelection");
 
     const formValidation = function() {
-        const player1 = document.forms["playerSelecton"];
-        console.log(player1);
+        
     }
 
     startBtn.addEventListener("click", function() {
