@@ -13,16 +13,30 @@ body {
 
 .titleSpace {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 12px;
 }
 
 .titleSpace > #title {
-    color: grey;
     font-size: 3rem;
     font-weight: 800;
     font-family: sans-serif, cursive;
-    text-shadow: 4px 0px 8px rgb(32, 226, 252);
+    text-shadow: 0px 0px 8px rgb(53, 53, 53);
+}
+
+.titleSpace > button {
+    width: 125px;
+    height: 36px;
+    font-size: 1.25em;
+    font-weight: 700;
+    font-family: sans-serif;
+}
+
+.titleSpace > button:hover {
+    cursor: pointer;
+    box-shadow: 0px 0px 8px rgb(88, 100, 105)
 }
 
 .tableSpace {
