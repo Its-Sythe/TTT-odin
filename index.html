@@ -10,6 +10,7 @@
     <body>
         <section class="titleSpace">
             <p id="title">Tic Tac Toes</p>
+            <p id="rounds"></p>
             <button id="playBtn">Play Game!</button>
         </section>
         <section class="tableSpace">
@@ -23,20 +24,24 @@
             <div class="cell" id="7"></div>
             <div class="cell" id="8"></div>
         </section>
-        <form action="#" method="post" class="playerSelection">
+        <div id="buttons">
+            <button id="restartBtn">Restart Game</button>
+            <button id="resetBtn">Reset Game</button>
+        </div>
+        <form action="#" method="post" class="playerSelection" name="playerForm">
             <div id="player">
                 <label for="player1Name">Player 1: </label>
-                <input type="text" id="player1Name" placeholder="Player 1">
+                <input type="text" id="player1Name" placeholder="Player 1" name="player1Name">
                 <label for="player1Mark">Mark: </label>
-                <input type="text" id="player1Mark" placeholder="X">
+                <input type="text" id="player1Mark" placeholder="X" name="player1Mark">
             </div>
             <div id="player">
                 <label for="player2Name">Player 2: </label>
-                <input type="text" id="player2Name" placeholder="Player  2">
+                <input type="text" id="player2Name" placeholder="Player  2" name="player2Name">
                 <label for="player2Mark">Mark: </label>
-                <input type="text" id="player2Mark" placeholder="O">
+                <input type="text" id="player2Mark" placeholder="O" name="player2Mark">
             </div>
-            <button type="submit" id="submit">Start Game</button>
+            <button type="submit" id="submit" name="submitBtn">Start Game</button>
         </form>
     </body>
 </html>

@@ -1,3 +1,7 @@
+let player1;
+let player2;
+let round = 1;
+
 const game = (function() {
     let gameOver = false;
     let currentPlayer = "X";
@@ -9,14 +13,19 @@ const game = (function() {
 
     const getBoard = () => board;
 
+    const getPlayers = function(name, mark) {
+        return {
+            name, mark
+        }
+    }
+
     const switchPlayer = function() {
         return currentPlayer = (currentPlayer === "X") ? "O" : "X";
     };
 
-    const getCurrentPlayer = function(who) {
-        currentPlayer = who
+    const incrementRound = function() {
+        round++
     }
-
     const validateTable = function() {
         const winPatterns = [
             [0, 1, 2], [3, 4, 5], [6, 7, 8],
@@ -61,15 +70,13 @@ const game = (function() {
         let gameState = validateTable();
 
         if (gameState.state == "Win" || gameState.state == "Tie") {
-            resetGame()
             endRound(gameState);
-            return;
+            return gameState;
         }
     }
 
     const endRound = function(state) {
-        console.log(state.state, state.mark, state.combo);
-        gameOver = true;   
+        gameOver = true;  
     }
 
     const resetGame = function() {
@@ -78,39 +85,111 @@ const game = (function() {
             "", "", "",
             "", "", ""
         ];
+        currentPlayer = "X";
         gameOver = false;
     }
 
     return {
         getBoard,
         validateTable,
-        playRound
+        playRound,
+        getPlayers,
+        resetGame,
+        incrementRound
     }
 })();
 
 const gameUi = (function() {
-    const board = game.getBoard()
+    const rounds = document.getElementById("rounds");
+    const getPlayer = game.getPlayers;
+    const restartBtn = document.getElementById("restartBtn");
+    const resetBtn = document.getElementById("resetBtn");
     const startBtn = document.getElementById("playBtn");
     const tableSpace = document.querySelector(".tableSpace");
-    const playerForm = document.querySelector(".playerSelection");
+    const form = document.querySelector(".playerSelection");
+    const submitBtn = document.getElementById("submit");
 
-    const formValidation = function() {
-        
+    rounds.innerHTML = `Round: ${round}`
+
+    const validateForm = function(e) {
+        e.preventDefault();
+
+        let playersForm = document.forms["playerForm"]
+        player1 = getPlayer(playersForm["player1Name"].value || "Player 1", playersForm["player1Mark"].value || "X");
+        player2 = getPlayer(playersForm["player2Name"].value || "Player 2", playersForm["player2Mark"].value || "O")
+
+        form.style.display = "none";
+
+        tableSpace.style.display = "flex";
     }
 
-    startBtn.addEventListener("click", function() {
-        playerForm.style.display = "flex";
-        formValidation()
-        startBtn.remove();
-    });
+    const playGame = function(e) {
+        if(restartBtn.style.display === "flex" || resetBtn.style.display === "flex") {
+            return;
+        }
 
-    tableSpace.addEventListener("click", function(e) {
         let tgt = e.target;
 
         if (tgt.className != "cell") {
             return;
         }
-        game.playRound(tgt.id);
+
+        const board = game.getBoard();
+
+        
+        let result = game.playRound(tgt.id);
         tgt.innerHTML = board[tgt.id];
+
+        if (!result) {
+            return;
+        }
+
+        if (result.state === "Win") {
+            if (result.mark === player1.mark) {
+                console.log(`${player1.name} wins!`)
+            } else if (result.mark === player2.mark) {
+                console.log(`${player2.name} wins!`)
+            }
+            restartBtn.style.display = "flex";
+            resetBtn.style.display = "flex";
+        } else if (result.state === "Tie") {
+            console.log("Its a tie!");
+            restartBtn.style.display = "flex";
+            resetBtn.style.display = "flex";
+        }
+    }
+
+    const resetUi = function() {
+        let cells = document.querySelectorAll(".cell");
+        cells.forEach(cell => {
+            cell.innerHTML = "";
+        })
+    }
+
+    startBtn.addEventListener("click", function() {
+        form.style.display = "flex";
+        startBtn.remove();
+    })
+
+    tableSpace.addEventListener("click", function(e) {
+        playGame(e)
+    });
+
+    submitBtn.addEventListener("click", validateForm);
+
+    restartBtn.addEventListener("click", function() {
+        game.resetGame();
+        resetUi();
+        restartBtn.style.display = "none";
+        game.incrementRound();
+        rounds.innerHTML = `Round: ${round}`
+    })
+
+    resetBtn.addEventListener("click", function() {
+        game.resetGame();
+        resetUi();
+        resetBtn.style.display = "none";
+        round = 1;
+        rounds.innerHTML = `Round: ${round}`
     })
 })();
